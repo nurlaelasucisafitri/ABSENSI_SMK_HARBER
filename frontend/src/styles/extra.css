@@ -1,0 +1,87 @@
+/* ── Tabs ── */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 18px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.tab-btn.active {
+  color: #00bcd4;
+  border-bottom-color: #00bcd4;
+}
+
+/* ── QR grid ── */
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+.qr-card {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+.qr-card img {
+  width: 100%;
+  max-width: 150px;
+  margin: 0 auto 8px;
+  display: block;
+}
+.qr-card-name {
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin: 4px 0 0;
+}
+.qr-card-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+/* ── Laporan table ── */
+.laporan-table th, .laporan-table td {
+  padding: 6px 8px;
+  font-size: 0.78rem;
+}
+.laporan-summary {
+  margin-top: 16px;
+  display: flex;
+  gap: 24px;
+  font-size: 0.85rem;
+}
+.laporan-summary p { margin: 0; }
+
+/* ── Backup ── */
+.backup-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+.backup-restore-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.backup-restore-row .form-control {
+  max-width: 320px;
+}
+
+@media (max-width: 600px) {
+  .qr-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}
