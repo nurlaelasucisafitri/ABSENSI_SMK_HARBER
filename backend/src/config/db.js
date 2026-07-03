@@ -1,7 +1,25 @@
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Coba baca CA certificate untuk koneksi SSL (wajib untuk Aiven)
+function getSSLConfig() {
+  try {
+    const caPath = path.join(process.cwd(), 'ca.pem');
+    if (fs.existsSync(caPath)) {
+      return { ca: fs.readFileSync(caPath) };
+    }
+  } catch {}
+  return undefined;
+}
+
+const ssl = getSSLConfig();
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
@@ -12,7 +30,8 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  dateStrings: true, // agar kolom DATE/TIME dikembalikan sebagai string, bukan objek JS Date
+  dateStrings: true,
+  ssl: ssl,
 });
 
 export default pool;
