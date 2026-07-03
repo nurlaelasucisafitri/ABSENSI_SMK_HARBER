@@ -14,8 +14,23 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// ── Middleware ──
-app.use(cors({ origin: process.env.FRONTEND_URL || '*', credentials: true }));
+// ── CORS — support multiple origin dipisah koma di env FRONTEND_URL ──
+const allowedOrigins = (process.env.FRONTEND_URL || '*')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes('*') || !origin || allowedOrigins.includes(origin)) {
+      callback(null, origin || '*');
+    } else {
+      callback(new Error('Origin tidak diizinkan: ' + origin));
+    }
+  },
+  credentials: true,
+}));
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
